@@ -19,9 +19,9 @@ using namespace RDKit;
 
 namespace {
 void determineConnectivityHelper(ROMol &mol, bool useHueckel, int charge,
-                                 double covFactor) {
+                                 double covFactor, double overlapThreshold) {
   auto &wmol = static_cast<RWMol &>(mol);
-  determineConnectivity(wmol, useHueckel, charge, covFactor);
+  determineConnectivity(wmol, useHueckel, charge, covFactor, overlapThreshold);
 }
 void determineBondOrdersHelper(ROMol &mol, int charge,
                                bool allowChargedFragments, bool embedChiral,
@@ -31,11 +31,12 @@ void determineBondOrdersHelper(ROMol &mol, int charge,
                       useAtomMap);
 }
 void determineBondsHelper(ROMol &mol, bool useHueckel, int charge,
-                          double covFactor, bool allowChargedFragments,
-                          bool embedChiral, bool useAtomMap) {
+                          double covFactor, double overlapThreshold,
+                          bool allowChargedFragments, bool embedChiral,
+                          bool useAtomMap) {
   auto &wmol = static_cast<RWMol &>(mol);
-  determineBonds(wmol, useHueckel, charge, covFactor, allowChargedFragments,
-                 embedChiral, useAtomMap);
+  determineBonds(wmol, useHueckel, charge, covFactor, overlapThreshold,
+                 allowChargedFragments, embedChiral, useAtomMap);
 }
 }  // namespace
 
@@ -56,10 +57,13 @@ Args:
        the Hueckel method is used and charge is non-zero
    covFactor : (optional) the factor with which to multiply each covalent
        radius if the van der Waals method is used
+   overlapThreshold : (optional) the threshold above which a bond is formed
+       if the Hueckel method is used
 )DOC";
   python::def("DetermineConnectivity", &determineConnectivityHelper,
               (python::arg("mol"), python::arg("useHueckel") = false,
-               python::arg("charge") = 0, python::arg("covFactor") = 1.3),
+               python::arg("charge") = 0, python::arg("covFactor") = 1.3,
+               python::arg("overlapThreshold") = 0.15),
               docs.c_str());
 
   docs =
@@ -98,6 +102,8 @@ Args:
        the Hueckel method is used and charge is non-zero
    covFactor : (optional) the factor with which to multiply each covalent
        radius if the van der Waals method is used
+   overlapThreshold : (optional) the threshold above which a bond is formed
+       if the Hueckel method is used
    allowChargedFragments : (optional) if this is true, formal charges
        will be placed on atoms according to their valency; otherwise, radical
        electrons will be placed on the atoms
@@ -111,7 +117,8 @@ Args:
       "DetermineBonds", &determineBondsHelper,
       (python::arg("mol"), python::arg("useHueckel") = false,
        python::arg("charge") = 0, python::arg("covFactor") = 1.3,
-       python ::arg("allowChargedFragments") = true,
+       python::arg("overlapThreshold") = 0.15,
+       python::arg("allowChargedFragments") = true,
        python::arg("embedChiral") = true, python::arg("useAtomMap") = false),
       docs.c_str());
 }
