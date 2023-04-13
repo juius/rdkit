@@ -27,11 +27,14 @@ namespace RDKit {
    the Hueckel method is used and charge is non-zero
    \param covFactor (optional) the factor with which to multiply each covalent
    radius if the van der Waals method is used
+   \param overlapThreshold (optional) the threshold above which a bond is formed
+   if the Hueckel method is used
  */
 RDKIT_DETERMINEBONDS_EXPORT void determineConnectivity(RWMol &mol,
                                                        bool useHueckel = false,
                                                        int charge = 0,
-                                                       double covFactor = 1.3);
+                                                       double covFactor = 1.3,
+                                                       double overlapThreshold = 0.15);
 
 // ! assigns bond ordering to a molecule that has atomic connectivity defined;
 // it is recommended to sanitize the molecule after calling this function if
@@ -71,6 +74,8 @@ RDKIT_DETERMINEBONDS_EXPORT void determineBondOrders(
    charge is non-zero
    \param covFactor (optional) the factor with which to multiply each covalent
    radius if the van der Waals method is used
+   \param overlapThreshold (optional) the threshold above which a bond is formed
+   if the Hueckel method is used
    \param allowChargedFragments (optional) if this is  \c true, formal charges
    will be placed on atoms according to their valency; otherwise, radical
    electrons will be placed on the atoms
@@ -82,8 +87,8 @@ RDKIT_DETERMINEBONDS_EXPORT void determineBondOrders(
  */
 RDKIT_DETERMINEBONDS_EXPORT void determineBonds(
     RWMol &mol, bool useHueckel = false, int charge = 0, double covFactor = 1.3,
-    bool allowChargedFragments = true, bool embedChiral = true,
-    bool useAtomMap = false);
+    double overlapThreshold = 0.15, bool allowChargedFragments = true,
+    bool embedChiral = true, bool useAtomMap = false);
 
 }  // namespace RDKit
 
