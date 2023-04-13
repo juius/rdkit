@@ -118,7 +118,7 @@ LazyCartesianProduct<unsigned int> getValenceCombinations(
 
 namespace RDKit {
 
-void connectivityHueckel(RWMol &mol, int charge) {
+void connectivityHueckel(RWMol &mol, int charge, double overlapThreshold) {
   auto numAtoms = mol.getNumAtoms();
   mol.getAtomWithIdx(0)->setFormalCharge(charge);
   EHTTools::EHTResults res;
@@ -130,7 +130,7 @@ void connectivityHueckel(RWMol &mol, int charge) {
   int matInd = 0;
   for (unsigned int i = 0; i < numAtoms; i++) {
     for (unsigned int j = 0; j < i + 1; j++) {
-      if (i != j && mat[matInd] >= 0.15) {
+      if (i != j && mat[matInd] >= overlapThreshold) {
         mol.addBond(i, j, Bond::BondType::SINGLE);
       }
       matInd++;
@@ -157,7 +157,7 @@ void connectivityVdW(RWMol &mol, double covFactor) {
 }  // connectivityVdW()
 
 void determineConnectivity(RWMol &mol, bool useHueckel, int charge,
-                           double covFactor) {
+                           double covFactor, double overlapThreshold) {
   auto numAtoms = mol.getNumAtoms();
   for (unsigned int i = 0; i < numAtoms; i++) {
     for (unsigned int j = i + 1; j < numAtoms; j++) {
@@ -167,7 +167,7 @@ void determineConnectivity(RWMol &mol, bool useHueckel, int charge,
     }
   }
   if (useHueckel) {
-    connectivityHueckel(mol, charge);
+    connectivityHueckel(mol, charge, overlapThreshold);
   } else {
     connectivityVdW(mol, covFactor);
   }
@@ -439,9 +439,9 @@ void determineBondOrders(RWMol &mol, int charge, bool allowChargedFragments,
 }  // determineBondOrdering()
 
 void determineBonds(RWMol &mol, bool useHueckel, int charge, double covFactor,
-                    bool allowChargedFragments, bool embedChiral,
-                    bool useAtomMap) {
-  determineConnectivity(mol, useHueckel, charge, covFactor);
+                    double overlapThreshold, bool allowChargedFragments,
+                    bool embedChiral, bool useAtomMap) {
+  determineConnectivity(mol, useHueckel, charge, covFactor, overlapThreshold);
   determineBondOrders(mol, charge, allowChargedFragments, embedChiral,
                       useAtomMap);
 }  // determineBonds()
