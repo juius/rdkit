@@ -7750,7 +7750,6 @@ void testGithub1614() {
     {
       RWMol nm(*m);
       MolOps::setDoubleBondNeighborDirections(nm);
-      // nm.debugMol(std::cerr);
       bool force = true, cleanIt = true;
       MolOps::assignStereochemistry(nm, cleanIt, force);
       TEST_ASSERT(nm.getBondBetweenAtoms(4, 5)->getStereo() == Bond::STEREOE);
@@ -7772,7 +7771,6 @@ void testGithub1614() {
     {
       RWMol nm(*m);
       MolOps::setDoubleBondNeighborDirections(nm);
-      // nm.debugMol(std::cerr);
       bool force = true, cleanIt = true;
       MolOps::assignStereochemistry(nm, cleanIt, force);
       TEST_ASSERT(nm.getBondBetweenAtoms(4, 5)->getStereo() == Bond::STEREOE);

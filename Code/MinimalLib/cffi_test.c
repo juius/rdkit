@@ -844,6 +844,10 @@ void test_coords() {
   printf("  test_coords\n");
   char *mpkl;
   size_t mpkl_size;
+  char *mpkl2;
+  size_t mpkl2_size;
+  char *mpkl3;
+  size_t mpkl3_size;
   mpkl = get_mol("C1CNC1CC", &mpkl_size, "");
 
   char *cxsmi = get_cxsmiles(mpkl, mpkl_size, NULL);
@@ -870,6 +874,10 @@ void test_coords() {
   // aligned
   char *tpkl;
   size_t tpkl_size;
+  char *tpkl2;
+  size_t tpkl2_size;
+  char *tpkl3;
+  size_t tpkl3_size;
   tpkl = get_mol(
       "\n\
   Mrv2102 04062106432D\n\
@@ -1004,6 +1012,75 @@ M  END\n",
   8  7  1  0\n\
 M  END\n",
       &mpkl_size, "");
+  tpkl3 = get_mol(
+      "\n\
+  MJ201100                      \n\
+\n\
+ 12 13  0  0  0  0  0  0  0  0999 V2000\n\
+   -0.5398    0.0400    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n\
+   -1.3648    0.0400    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n\
+   -1.7773   -0.6745    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n\
+   -1.3649   -1.3889    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n\
+   -0.5399   -1.3889    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n\
+   -0.1273   -0.6744    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n\
+    0.6976   -0.6744    0.0000 L   0  0  0  0  0  0  0  0  0  0  0  0\n\
+   -1.9167    0.6531    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n\
+   -2.6704    0.3176    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n\
+   -2.5842   -0.5028    0.0000 N   0  0  0  0  0  0  0  0  0  0  0  0\n\
+   -3.3849    0.7302    0.0000 L   0  0  0  0  0  0  0  0  0  0  0  0\n\
+   -1.7451    1.4600    0.0000 L   0  0  0  0  0  0  0  0  0  0  0  0\n\
+  1  2  2  0  0  0  0\n\
+  2  3  1  0  0  0  0\n\
+  3  4  2  0  0  0  0\n\
+  4  5  1  0  0  0  0\n\
+  5  6  2  0  0  0  0\n\
+  6  1  1  0  0  0  0\n\
+  6  7  1  0  0  0  0\n\
+  8  9  2  0  0  0  0\n\
+  2  8  1  0  0  0  0\n\
+  9 10  1  0  0  0  0\n\
+  3 10  1  0  0  0  0\n\
+  9 11  1  0  0  0  0\n\
+  8 12  1  0  0  0  0\n\
+M  ALS   7 10 F H   C   N   O   F   P   S   Cl  Br  I   \n\
+M  ALS  11 10 F H   C   N   O   F   P   S   Cl  Br  I   \n\
+M  ALS  12 10 F H   C   N   O   F   P   S   Cl  Br  I   \n\
+M  END\n",
+      &tpkl3_size, "");
+  mpkl3 = get_mol(
+      "\n\
+  MJ201100                      \n\
+\n\
+ 13 14  0  0  0  0  0  0  0  0999 V2000\n\
+   -0.6112    0.3665    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n\
+   -1.3648    0.0310    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n\
+   -1.4510   -0.7895    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n\
+   -0.7836   -1.2744    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n\
+   -0.0299   -0.9389    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n\
+    0.0562   -0.1183    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n\
+    0.8099    0.2172    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0\n\
+   -2.1184    0.3666    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n\
+   -2.6705   -0.2464    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n\
+   -2.2580   -0.9608    0.0000 N   0  0  0  0  0  0  0  0  0  0  0  0\n\
+    0.6374   -1.4238    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0\n\
+    0.8961    1.0377    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n\
+    0.5512   -2.2443    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n\
+  1  2  2  0  0  0  0\n\
+  2  3  1  0  0  0  0\n\
+  3  4  2  0  0  0  0\n\
+  4  5  1  0  0  0  0\n\
+  5  6  2  0  0  0  0\n\
+  6  1  1  0  0  0  0\n\
+  8  9  2  0  0  0  0\n\
+  2  8  1  0  0  0  0\n\
+  9 10  1  0  0  0  0\n\
+  3 10  1  0  0  0  0\n\
+  6  7  1  0  0  0  0\n\
+  5 11  1  0  0  0  0\n\
+  7 12  1  0  0  0  0\n\
+ 11 13  1  0  0  0  0\n\
+M  END\n",
+      &mpkl3_size, "");
   float **mol_coords = _get_coord_array(mpkl, mpkl_size);
   assert(mol_coords);
   float bond_length11_12 = sqrt(_sq_dist(mol_coords[11], mol_coords[12]));
@@ -1025,8 +1102,6 @@ M  END\n",
   char *mpkl2_molblock_after = NULL;
   char *mpkl_smi = NULL;
   size_t mpkl_smi_size;
-  char *mpkl2 = NULL;
-  size_t mpkl2_size;
 
   for (i = 0; i < 2; ++i) {
     // this has no initial coordinates and matches the template
@@ -1124,12 +1199,25 @@ M  END\n",
     // coordinates should be present since coordinate generation has taken place anyway using CoordGen
     assert(has_coords(mpkl_smi, mpkl_smi_size));
     free(mpkl_smi);
+
+    memset(details, 0, 200);
+    sprintf(details,
+            "{\"acceptFailure\":false,\"allowRGroups\":true,\"alignOnly\":%s}",
+            align_only_choices[i]);
+    assert(set_2d_coords_aligned(&mpkl3, &mpkl3_size, tpkl3, tpkl3_size,
+                                 details, &match_json));
+    assert(!strcmp(
+        match_json,
+        "{\"atoms\":[0,1,2,3,4,5,6,7,8,9],\"bonds\":[0,1,2,3,4,5,10,6,7,8,9]}"));
+    free(match_json);
   }
 
   _free_coord_array(mol_coords);
   _free_coord_array(tpl_coords);
   free(mpkl);
   free(tpkl);
+  free(mpkl3);
+  free(tpkl3);
 
   printf("  done\n");
   printf("--------------------------\n");
@@ -1791,6 +1879,80 @@ M  END\n", &tpkl_size, "");
   free(tpkl);
 }
 
+void test_removehs() {
+  printf("--------------------------\n");
+  printf("  test_removehs\n");
+  size_t mpkl_size;
+  char *mpkl = get_mol("N1C=CC(=O)c2ccc(N(C)(C)(C)(C)C)cc12", &mpkl_size, "{\"sanitize\":false,\"removeHs\":false}");
+  char *smi = get_smiles(mpkl, mpkl_size, "");
+  assert(mpkl);
+  assert(!strcmp(smi, "CN(C)(C)(C)(C)c1ccc2c(c1)NC=CC2=O"));
+  free(smi);
+  free(mpkl);
+}
+
+void test_use_legacy_stereo() {
+  printf("--------------------------\n");
+  printf("  test_use_legacy_stereo\n");
+  short orig_setting = use_legacy_stereo_perception(1);
+  char *mpkl;
+  size_t mpkl_size;
+  mpkl = get_mol("O[C@@]1(C)C/C(/C1)=C(/C)\\CC", &mpkl_size, "");
+  assert(mpkl);
+  assert(mpkl_size > 0);
+  char *smiles = get_smiles(mpkl, mpkl_size, NULL);
+  assert(!strcmp(smiles, "CCC(C)=C1CC(C)(O)C1"));
+  free(smiles);
+  free(mpkl);
+  use_legacy_stereo_perception(0);
+  mpkl = get_mol("O[C@@]1(C)C/C(/C1)=C(/C)\\CC", &mpkl_size, "");
+  assert(mpkl);
+  assert(mpkl_size > 0);
+  smiles = get_smiles(mpkl, mpkl_size, NULL);
+  assert(!strcmp(smiles, "CC/C(C)=C1\\C[C@](C)(O)C1"));
+  free(smiles);
+  free(mpkl);
+  use_legacy_stereo_perception(orig_setting);
+}
+
+void test_allow_non_tetrahedral_chirality() {
+  printf("--------------------------\n");
+  printf("  test_allow_non_tetrahedral_chirality\n");
+  char ctab[] = "\n\
+  Mrv2108 09132105183D          \n\
+\n\
+  5  4  0  0  0  0            999 V2000\n\
+   -1.2500    1.4518    0.0000 Pt  0  0  0  0  0  0  0  0  0  0  0  0\n\
+   -1.2500    2.2768    0.0000 F   0  0  0  0  0  0  0  0  0  0  0  0\n\
+   -0.4250    1.4518    0.0000 Cl  0  0  0  0  0  0  0  0  0  0  0  0\n\
+   -2.0750    1.4518    0.0000 F   0  0  0  0  0  0  0  0  0  0  0  0\n\
+   -1.2500    0.6268    0.0000 Cl  0  0  0  0  0  0  0  0  0  0  0  0\n\
+  1  2  1  0  0  0  0\n\
+  1  3  1  0  0  0  0\n\
+  1  4  1  0  0  0  0\n\
+  1  5  1  0  0  0  0\n\
+M  END\n";
+  short orig_setting = allow_non_tetrahedral_chirality(1);
+  char *mpkl;
+  size_t mpkl_size;
+  mpkl = get_mol(ctab, &mpkl_size, "");
+  assert(mpkl);
+  assert(mpkl_size > 0);
+  char *smiles = get_smiles(mpkl, mpkl_size, NULL);
+  assert(!strcmp(smiles, "F[Pt@SP3](F)(Cl)Cl"));
+  free(smiles);
+  free(mpkl);
+  allow_non_tetrahedral_chirality(0);
+  mpkl = get_mol(ctab, &mpkl_size, "");
+  assert(mpkl);
+  assert(mpkl_size > 0);
+  smiles = get_smiles(mpkl, mpkl_size, NULL);
+  assert(!strcmp(smiles, "F[Pt](F)(Cl)Cl"));
+  free(smiles);
+  free(mpkl);
+  allow_non_tetrahedral_chirality(orig_setting);
+}
+
 
 int main() {
   enable_logging();
@@ -1812,5 +1974,8 @@ int main() {
   test_wedging_all_within_scaffold();
   test_wedging_outside_scaffold();
   test_wedging_if_no_match();
+  test_removehs();
+  test_use_legacy_stereo();
+  test_allow_non_tetrahedral_chirality();
   return 0;
 }
