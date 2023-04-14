@@ -538,8 +538,9 @@ ROMol *fragmentOnBonds(
       // was github issues 429, 6034, 6287
       for (auto idx : {bidx, eidx}) {
         if (auto tatom = res->getAtomWithIdx(idx);
-            tatom->getNoImplicit() && bT != 17 ||
-            (tatom->getIsAromatic() && tatom->getAtomicNum() != 6)) {
+            (tatom->getNoImplicit() ||
+            (tatom->getIsAromatic() && tatom->getAtomicNum() != 6)) &&
+            bT != 17) {
           tatom->setNumExplicitHs(tatom->getNumExplicitHs() + 1);
         } else {
           tatom->updatePropertyCache(false);
