@@ -49,4 +49,4 @@ then
     exit 1
 fi
 echo "Running tests..."
-ctest -j 16
+ctest -j 16 --output-on-failure
