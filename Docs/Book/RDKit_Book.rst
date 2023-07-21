@@ -500,7 +500,7 @@ Here are the non-element atom queries that are supported:
   - A: any heavy atom
   - Q: any non-carbon heavy atom
   - \*: unspecfied (interpreted as any atom)
-  - L: (v2000): atom list
+  - L: (V2000): atom list
   - AH: (ChemAxon Extension) any atom
   - QH: (ChemAxon Extension) any non-carbon atom
   - X: (ChemAxon Extension) halogen
@@ -514,6 +514,7 @@ Here's a partial list of the features that are supported:
   - enhanced stereochemistry (V3000 only)
   - Sgroups: Sgroups are read and written, but interpretation of their contents is still very much
     a work in progress
+  - Dative bonds in V2000 (type 9), despite them not being part of the standard, we support them because they frequently show up in real-world data
 
 Ring Finding and SSSR
 =====================
@@ -1603,10 +1604,9 @@ Here are the steps involved, in order.
         Example: ``O=Cl(=O)O -> [O-][Cl+2][O-]O``
 
      This step should not generate exceptions.
-
   3. ``cleanUpOrganometallics``: standardizes a small number of non-standard
      situations encountered in organometallics. The cleanup operations are:
-     
+
        - replaces single bonds from hypervalent atoms to metals with dative bonds.
 
      This step should not generate exceptions.

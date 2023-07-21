@@ -643,8 +643,9 @@ TEST_CASE("github #6050: stereogroups not combined") {
   }
 }
 
-TEST_CASE("github #6225: removes enhanced stereo if doIsomericSmiles is false") {
-  { // Gets rid of chiral centers
+TEST_CASE(
+    "github #6225: removes enhanced stereo if doIsomericSmiles is false") {
+  {  // Gets rid of chiral centers
     std::string smiles = "O[C@H](Br)[C@H](F)C |&1:1,3|";
     ROMol *m = SmilesToMol(smiles);
     SmilesWriteParams params;
@@ -663,5 +664,46 @@ TEST_CASE("github #6225: removes enhanced stereo if doIsomericSmiles is false") 
     REQUIRE(m);
     CHECK(MolToCXSmiles(*m, params) == "C1=CCCCCCCCC1");
     delete m;
+  }
+}
+
+TEST_CASE(
+    "Github #6315: MolToSmiles(canonical=False) creates the wrong _smilesBondOutputOrder property") {
+  auto m = "C"_smiles;
+  REQUIRE(m);
+
+  SECTION("initial report") {
+    SmilesWriteParams sw;
+    sw.canonical = false;
+    auto smi = MolToSmiles(*m, sw);
+    CHECK(smi == "C");
+    auto cxsmi = MolToCXSmiles(*m, sw);
+    CHECK(cxsmi == "C");
+  }
+
+  SECTION("details") {
+    SmilesWriteParams sw;
+    sw.canonical = false;
+    auto smi = MolToSmiles(*m, sw);
+    CHECK(smi == "C");
+    std::vector<unsigned int> order;
+    CHECK(
+        m->getPropIfPresent(common_properties::_smilesBondOutputOrder, order));
+    CHECK(order.empty());
+  }
+
+  SECTION("bond ordering is actually correct") {
+    auto m2 = "C1(CC1)O"_smiles;
+    REQUIRE(m2);
+
+    SmilesWriteParams sw;
+    sw.canonical = false;
+    auto smi = MolToSmiles(*m2, sw);
+    CHECK(smi == "C1(O)CC1");
+    std::vector<unsigned int> order;
+    CHECK(
+        m2->getPropIfPresent(common_properties::_smilesBondOutputOrder, order));
+    CHECK(order.size() == 4);
+    CHECK(order == std::vector<unsigned int>{2, 0, 1, 3});
   }
 }
